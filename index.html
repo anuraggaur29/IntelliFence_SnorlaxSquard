@@ -1,0 +1,3306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntelliFence - Smart Power Line Monitoring & Illegal Electrification Prevention | KSEBL</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="IntelliFence - Advanced IoT-based smart power line monitoring system for Kerala State Electricity Board. Real-time monitoring, AI analytics, and automated threat detection.">
+    <meta name="keywords" content="smart power monitoring, IoT, Kerala electricity board, power line security, ESP32, real-time analytics, SIH 2024">
+    <meta name="author" content="IntelliFence Team - Smart India Hackathon 2024">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="IntelliFence - Smart Power Line Monitoring System">
+    <meta property="og:description" content="Advanced IoT solution for power line monitoring and illegal electrification prevention">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://intellifence-sih2024.netlify.app">
+    <meta property="og:image" content="https://intellifence-sih2024.netlify.app/circuit.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IntelliFence - Smart Power Line Monitoring">
+    <meta name="twitter:description" content="IoT-based power line monitoring for Kerala State Electricity Board">
+    <meta name="twitter:image" content="https://intellifence-sih2024.netlify.app/circuit.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/chart.js" as="script">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//unpkg.com">
+    
+    <!-- Material-UI and Dependencies -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.development.js"></script>
+    <script src="https://unpkg.com/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    
+    <!-- Chart.js for Performance Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Performance Optimization -->
+    <script>
+        // Service Worker for caching (optional for future)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                // navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</head>
+<body>
+    <!-- Problem Statement Popup -->
+    <div id="problem-statement-popup" class="popup-overlay" style="display: none;">
+        <div class="popup-content">                                                                                                                                                                 
+            <div class="popup-header">
+                <h2><i class="fas fa-shield-alt"></i> Problem Statement</h2>
+                <button class="popup-close" onclick="closeProblemStatementPopup()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="popup-body">
+                <div class="ps-detail">
+                    <strong>Problem Statement ID:</strong> 25077
+                </div>
+                <div class="ps-detail">
+                    <strong>Title:</strong> A hardware that can detect and prevent unauthorized use of electric fences.
+                </div>
+                <div class="ps-detail">
+                    <strong>Description:</strong> An intelligent hardware system that monitors power lines and electrical infrastructure to detect, prevent, and automatically stop illegal electrification attempts while ensuring grid safety and compliance
+                </div>
+                <div class="ps-detail">
+                    <strong>Organization:</strong> Government of Kerala
+                </div>
+                <div class="ps-detail">
+                    <strong>Department:</strong> Kerala State Electricity Board Limited (KSEBL)
+                </div>
+                <div class="ps-detail">
+                    <strong>Category:</strong> Hardware
+                </div>
+                <div class="ps-detail">
+                    <strong>Theme:</strong> Smart Automation
+                </div>
+            </div>
+            <div class="popup-footer">
+                <button class="btn btn-primary" onclick="learnMoreProblemStatement()">
+                    <i class="fas fa-info-circle"></i> Learn More
+                </button>
+                <button class="btn btn-secondary" onclick="closeProblemStatementPopup()">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>IntelliFence</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">What We Do</a></li>
+                <li><a href="#demo">Live Demo</a></li>
+                <li><a href="#hardware">Hardware</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#performance-analytics">Analytics</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#" class="ps-button" onclick="event.preventDefault(); event.stopPropagation(); showProblemStatementPopup();">PS</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>IntelliFence</h1>
+                <h2>Smart Power Line Monitoring & Illegal Electrification Prevention System</h2>
+                <p>Advanced IoT-based solution that monitors power lines and electrical infrastructure to detect, prevent, and automatically stop illegal electrification attempts while ensuring grid safety and compliance for KSEBL</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Live Dashboard
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToSection('hardware')">
+                        <i class="fas fa-microchip"></i> Hardware Details
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="system-diagram">
+                    <div class="fence-line"></div>
+                    <div class="sensor-node" id="sensor1">
+                        <i class="fas fa-microchip"></i>
+                        <span>Sensor 1</span>
+                    </div>
+                    <div class="sensor-node" id="sensor2">
+                        <i class="fas fa-microchip"></i>
+                        <span>Sensor 2</span>
+                    </div>
+                    <div class="sensor-node" id="sensor3">
+                        <i class="fas fa-microchip"></i>
+                        <span>Sensor 3</span>
+                    </div>
+                    <div class="control-unit">
+                        <i class="fas fa-server"></i>
+                        <span>Control Unit</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <h2>Live Hardware Demonstration</h2>
+            <p class="section-subtitle">See IntelliFence in action with our real hardware prototype</p>
+            
+            <div class="demo-layout">
+                <div class="simulation-container">
+                    <div class="simulation-image-wrapper">
+                        <div class="simulation-header">
+                            <i class="fas fa-microchip"></i>
+                            <h3>Hardware Circuit Simulation</h3>
+                            <p>Real ESP32-based IntelliFence prototype circuit diagram</p>
+                        </div>
+                        <div class="simulation-image">
+                            <img id="circuitImage" src="./circuit.png?v=1" alt="IntelliFence Hardware Circuit Simulation" 
+                                 onload="console.log('Image loaded successfully'); this.nextElementSibling.style.display='none';" 
+                                 onerror="console.log('Image failed to load, trying alternative'); handleImageError(this);" />
+                            <div class="image-fallback" style="display:none; align-items:center; justify-content:center; min-height:300px; color:white; text-align:center;">
+                                <div>
+                                    <i class="fas fa-microchip" style="font-size:3rem; margin-bottom:20px; color:#00ff88;"></i>
+                                    <h4>Circuit Diagram Loading...</h4>
+                                    <p>IntelliFence Hardware Prototype</p>
+                                </div>
+                            </div>
+                            <div class="image-overlay">
+                                <div class="circuit-labels">
+                                    <div class="label esp32">ESP32 Controller</div>
+                                    <div class="label sensors">Relay Switch</div>
+                                    <div class="label ultrasonic">Ultrasonic Distance Sensor</div>
+                                    <div class="label voltage">Relay Module</div>
+                                    <div class="label current">Current and Voltage Sensor Combined</div>
+                                    <div class="label relay">Fences</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <script>
+                        function handleImageError(img) {
+                            console.log('Trying alternative image paths...');
+                            const alternatives = [
+                                'simulation-diagram.png?v=1',
+                                'Screenshot 2025-09-20 015020.png',
+                                './simulation-diagram.png',
+                                './Screenshot 2025-09-20 015020.png'
+                            ];
+                            
+                            let index = img.dataset.attemptIndex || 0;
+                            if (index < alternatives.length) {
+                                img.dataset.attemptIndex = parseInt(index) + 1;
+                                img.src = alternatives[index];
+                            } else {
+                                img.style.display = 'none';
+                                img.nextElementSibling.nextElementSibling.style.display = 'flex';
+                            }
+                        }
+                        </script>
+                    </div>
+                </div>
+                
+                <div class="video-demo-container">
+                    <div class="video-header">
+                        <i class="fas fa-play-circle"></i>
+                        <h3>Live Hardware Demo</h3>
+                        <p>Watch IntelliFence system in real-time operation</p>
+                    </div>
+                    <div class="video-content">
+                        <div class="video-player">
+                            <video autoplay muted loop preload="metadata" poster="">
+                                <source src="SIH_prototype_video_simulation.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-details">
+                                <h4><i class="fas fa-video"></i> IntelliFence Prototype Demo</h4>
+                                <p>Hardware simulation showing real-time monitoring and alert system</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- What You'll See in Action - Moved Below -->
+            <div class="demo-highlights-section">
+                <div class="demo-highlights">
+                    <h3>What You'll See in Action</h3>
+                    <div class="highlight-grid">
+                        <div class="highlight-item">
+                            <i class="fas fa-microchip"></i>
+                            <h4>ESP32 Controller</h4>
+                            <p>Real-time data processing and system coordination</p>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-chart-line"></i>
+                            <h4>Live Monitoring</h4>
+                            <p>Voltage, current, and sensor readings updating in real-time</p>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-bell"></i>
+                            <h4>Alert System</h4>
+                            <p>Immediate notifications when unauthorized activity is detected</p>
+                        </div>
+                        <div class="highlight-item">
+
+
+                            <i class="fas fa-wifi"></i>
+                            <h4>Communication</h4>
+                            <p>SMS alerts and data transmission to monitoring dashboard</p>
+                        </div>
+                        <div class="highlight-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Protection Features</h4>
+                            <p>Anti-tamper detection and weatherproof enclosure testing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard">
+        <div class="container">
+            <h2>Live Monitoring Dashboard</h2>
+            
+            <!-- Multi-Fence Controls -->
+            <div class="dashboard-header">
+                <div class="fence-selector-section">
+                    <label for="fenceSelector">Select Fence Section:</label>
+                    <select id="fenceSelector" class="fence-dropdown" onchange="switchFence(this.value)">
+                        <option value="overview">📊 Overview - All Fences</option>
+                        <option value="fence-a" selected>🏭 Fence A - Trivandrum North</option>
+                        <option value="fence-b">🏢 Fence B - Kochi Industrial</option>
+                        <option value="fence-c">🌾 Fence C - Kozhikode Rural</option>
+                        <option value="fence-d">🌊 Fence D - Kannur Coastal</option>
+                    </select>
+                    <div class="fence-status-indicator">
+                        <span id="selectedFenceStatus" class="status-badge online">Online</span>
+                        <span id="selectedFenceLocation">Trivandrum North Zone</span>
+                    </div>
+                </div>
+                
+                <div class="global-alerts-summary">
+                    <div class="alert-counts">
+                        <div class="alert-count critical">
+                            <span class="count" id="globalCriticalCount">1</span>
+                            <span class="label">Critical</span>
+                        </div>
+                        <div class="alert-count warning">
+                            <span class="count" id="globalWarningCount">3</span>
+                            <span class="label">Warnings</span>
+                        </div>
+                        <div class="alert-count info">
+                            <span class="count" id="globalInfoCount">5</span>
+                            <span class="label">Info</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-small alerts-panel-toggle" onclick="toggleGlobalAlerts()">
+                        <i class="fas fa-bell"></i> View All Alerts
+                    </button>
+                </div>
+            </div>
+            
+            <div class="dashboard-controls">
+                <button class="btn btn-small" onclick="startSimulation()">
+                    <i class="fas fa-play"></i> Start Simulation
+                </button>
+                <button class="btn btn-small" onclick="stopSimulation()">
+                    <i class="fas fa-stop"></i> Stop Simulation
+                </button>
+                <button class="btn btn-small" onclick="triggerAlert()">
+                    <i class="fas fa-exclamation-triangle"></i> Test Alert
+                </button>
+                <button class="btn btn-small" onclick="refreshDashboard()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            
+            <div class="dashboard-layout">
+                <!-- Main Dashboard Content -->
+                <div class="main-dashboard">
+                    <div class="dashboard-grid">
+                        <div class="metric-card">
+                            <h3>System Status</h3>
+                            <div class="fence-info">
+                                <span id="currentFenceName">Fence A - Trivandrum North</span>
+                                <small id="currentFenceLocation">Zone: North Kerala | Grid ID: TVM-001</small>
+                            </div>
+                            <div class="status-indicator online" id="systemStatus">
+                                <i class="fas fa-circle"></i>
+                                <span>Online</span>
+                            </div>
+                            <div class="metric-value">
+                                <span id="deviceCount">12</span>
+                                <small>Active Devices</small>
+                            </div>
+                    <div class="system-details">
+                        <div class="status-comparison">
+                            <div class="previous-value">
+                                <small>Uptime:</small>
+                                <span id="systemUptime">15h 42m</span>
+                            </div>
+                            <div class="status-change-detail">
+                                <i class="fas fa-check-circle" style="color: #10b981;"></i>
+                                <span>Stable</span>
+                            </div>
+                        </div>
+                        <div class="system-parameters">
+                            <div class="param-grid">
+                                <div class="param-item">
+                                    <span class="param-label">CPU Usage</span>
+                                    <span class="param-value">23%</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Memory</span>
+                                    <span class="param-value">67%</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Temperature</span>
+                                    <span class="param-value">42°C</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Health</span>
+                                    <span class="param-value health-excellent">Excellent</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="system-visualization">
+                            <div class="health-matrix">
+                                <div class="matrix-grid">
+                                    <div class="matrix-cell active" data-system="Power">Power</div>
+                                    <div class="matrix-cell active" data-system="Network">Network</div>
+                                    <div class="matrix-cell active" data-system="Sensors">Sensors</div>
+                                    <div class="matrix-cell warning" data-system="Storage">Storage</div>
+                                    <div class="matrix-cell active" data-system="Security">Security</div>
+                                    <div class="matrix-cell active" data-system="Alerts">Alerts</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>Current Monitoring</h3>
+                    <div class="metric-value">
+                        <span id="currentValue">15.2</span>
+                        <small>Amperes</small>
+                    </div>
+                    <div class="current-details">
+                        <div class="current-comparison">
+                            <div class="previous-value">
+                                <small>Previous:</small>
+                                <span id="previousCurrent">14.8 A</span>
+                            </div>
+                            <div class="current-change-detail">
+                                <i class="fas fa-arrow-up trend-up"></i>
+                                <span>+0.4 A (+2.7%)</span>
+                            </div>
+                        </div>
+                        <div class="current-parameters">
+                            <div class="param-grid">
+                                <div class="param-item">
+                                    <span class="param-label">Peak Today</span>
+                                    <span class="param-value">18.7 A</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Low Today</span>
+                                    <span class="param-value">12.1 A</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Average</span>
+                                    <span class="param-value">15.0 A</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Frequency</span>
+                                    <span class="param-value frequency-normal">50 Hz</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="current-visualization">
+                            <div class="wave-container">
+                                <div class="wave-display">
+                                    <svg class="wave-svg" viewBox="0 0 200 100">
+                                        <!-- Grid lines for better visualization -->
+                                        <defs>
+                                            <pattern id="grid" width="20" height="10" patternUnits="userSpaceOnUse">
+                                                <path d="M 20 0 L 0 0 0 10" fill="none" stroke="#e5e7eb" stroke-width="0.5" opacity="0.3"/>
+                                            </pattern>
+                                        </defs>
+                                        <rect width="200" height="100" fill="url(#grid)"/>
+                                        
+                                        <!-- Center reference line -->
+                                        <line x1="0" y1="50" x2="200" y2="50" stroke="#9ca3af" stroke-width="1" opacity="0.5" stroke-dasharray="2,2"/>
+                                        
+                                        <!-- Voltage Wave (Blue - Higher frequency) -->
+                                        <path class="wave-voltage" d="M0,50 Q5,30 10,50 T20,50 T30,50 T40,50 T50,50 T60,50 T70,50 T80,50 T90,50 T100,50 T110,50 T120,50 T130,50 T140,50 T150,50 T160,50 T170,50 T180,50 T190,50 T200,50" 
+                                              stroke="#3b82f6" stroke-width="2.5" fill="none"/>
+                                        <path class="wave-voltage-glow" d="M0,50 Q5,30 10,50 T20,50 T30,50 T40,50 T50,50 T60,50 T70,50 T80,50 T90,50 T100,50 T110,50 T120,50 T130,50 T140,50 T150,50 T160,50 T170,50 T180,50 T190,50 T200,50" 
+                                              stroke="#60a5fa" stroke-width="1" fill="none" opacity="0.6"/>
+                                        
+                                        <!-- Current Wave (Green - Medium frequency) -->
+                                        <path class="wave-current" d="M0,50 Q8,25 16,50 T32,50 T48,50 T64,50 T80,50 T96,50 T112,50 T128,50 T144,50 T160,50 T176,50 T192,50 T200,50" 
+                                              stroke="#10b981" stroke-width="2" fill="none"/>
+                                        <path class="wave-current-glow" d="M0,50 Q8,25 16,50 T32,50 T48,50 T64,50 T80,50 T96,50 T112,50 T128,50 T144,50 T160,50 T176,50 T192,50 T200,50" 
+                                              stroke="#34d399" stroke-width="1" fill="none" opacity="0.5"/>
+                                        
+                                        <!-- Power Wave (Orange - Lower frequency) -->
+                                        <path class="wave-power" d="M0,50 Q12,35 24,50 T48,50 T72,50 T96,50 T120,50 T144,50 T168,50 T192,50 T200,50" 
+                                              stroke="#f59e0b" stroke-width="2" fill="none"/>
+                                        <path class="wave-power-glow" d="M0,50 Q12,35 24,50 T48,50 T72,50 T96,50 T120,50 T144,50 T168,50 T192,50 T200,50" 
+                                              stroke="#fbbf24" stroke-width="1" fill="none" opacity="0.5"/>
+                                        
+                                        <!-- Harmonic Wave (Purple - Subtle) -->
+                                        <path class="wave-harmonic" d="M0,50 Q3,45 6,50 T12,50 T18,50 T24,50 T30,50 T36,50 T42,50 T48,50 T54,50 T60,50 T66,50 T72,50 T78,50 T84,50 T90,50 T96,50 T102,50 T108,50 T114,50 T120,50 T126,50 T132,50 T138,50 T144,50 T150,50 T156,50 T162,50 T168,50 T174,50 T180,50 T186,50 T192,50 T198,50 T200,50" 
+                                              stroke="#8b5cf6" stroke-width="1.5" fill="none" opacity="0.7"/>
+                                    </svg>
+                                    <div class="wave-overlay">
+                                        <div class="wave-line"></div>
+                                        <div class="wave-line"></div>
+                                        <div class="wave-line"></div>
+                                        <div class="wave-line"></div>
+                                        <div class="wave-line"></div>
+                                    </div>
+                                </div>
+                                <div class="wave-info">
+                                    <div class="wave-legend">
+                                        <div class="wave-legend-item">
+                                            <div class="wave-indicator" style="background: #3b82f6;"></div>
+                                            <span class="wave-label">Voltage: 230.5V</span>
+                                            <span class="wave-status">Stable</span>
+                                        </div>
+                                        <div class="wave-legend-item">
+                                            <div class="wave-indicator" style="background: #10b981;"></div>
+                                            <span class="wave-label">Current: ±2.1A</span>
+                                            <span class="wave-status">Normal</span>
+                                        </div>
+                                        <div class="wave-legend-item">
+                                            <div class="wave-indicator" style="background: #f59e0b;"></div>
+                                            <span class="wave-label">Power: 485W</span>
+                                            <span class="wave-status">Optimal</span>
+                                        </div>
+                                        <div class="wave-legend-item">
+                                            <div class="wave-indicator" style="background: #8b5cf6;"></div>
+                                            <span class="wave-label">Harmonics: 2.1%</span>
+                                            <span class="wave-status">Low</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>Voltage Level</h3>
+                    <div class="metric-value">
+                        <span id="voltageValue">230.5</span>
+                        <small>Volts</small>
+                    </div>
+                    <div class="voltage-details">
+                        <div class="voltage-comparison">
+                            <div class="previous-value">
+                                <small>Previous:</small>
+                                <span id="previousVoltage">229.8 V</span>
+                            </div>
+                            <div class="voltage-change-detail">
+                                <i class="fas fa-arrow-up trend-up" id="voltageTrend"></i>
+                                <span id="voltageChange">+0.7 V (+0.3%)</span>
+                            </div>
+                        </div>
+                        <div class="voltage-parameters">
+                            <div class="param-grid">
+                                <div class="param-item">
+                                    <span class="param-label">Min Today</span>
+                                    <span class="param-value">227.2 V</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Max Today</span>
+                                    <span class="param-value">232.1 V</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Average</span>
+                                    <span class="param-value">229.7 V</span>
+                                </div>
+                                <div class="param-item">
+                                    <span class="param-label">Stability</span>
+                                    <span class="param-value stability-good">98.5%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="voltage-visualization">
+                            <div class="voltage-gauge">
+                                <div class="gauge-background">
+                                    <div class="gauge-fill" style="width: 85%;"></div>
+                                    <div class="gauge-pointer" style="left: 85%;"></div>
+                                </div>
+                                <div class="gauge-labels">
+                                    <span>200V</span>
+                                    <span>220V</span>
+                                    <span>240V</span>
+                                </div>
+                                <div class="voltage-status">
+                                    <span class="status-indicator status-optimal">OPTIMAL</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <h3>Power Consumption</h3>
+                    <div class="metric-value">
+                        <span id="powerValue">3.5</span>
+                        <small>kW</small>
+                    </div>
+                    <div class="power-details">
+                        <div class="power-comparison">
+                            <div class="previous-value">
+                                <small>Previous:</small>
+                                <span id="previousPower">3.4 kW</span>
+                            </div>
+                            <div class="power-change-detail">
+                                <i class="fas fa-arrow-up trend-up" id="powerTrend"></i>
+                                <span id="powerChange">+0.1 kW (+2.9%)</span>
+                            </div>
+                        </div>
+                        <div class="power-graph">
+                            <div class="graph-container">
+                                <div class="graph-bars">
+                                    <div class="bar" style="height: 60%;" data-value="2.1"></div>
+                                    <div class="bar" style="height: 75%;" data-value="2.6"></div>
+                                    <div class="bar" style="height: 85%;" data-value="3.0"></div>
+                                    <div class="bar" style="height: 80%;" data-value="2.8"></div>
+                                    <div class="bar" style="height: 95%;" data-value="3.4"></div>
+                                    <div class="bar active" style="height: 100%;" data-value="3.5"></div>
+                                </div>
+                                <div class="graph-labels">
+                                    <span>6h</span>
+                                    <span>5h</span>
+                                    <span>4h</span>
+                                    <span>3h</span>
+                                    <span>2h</span>
+                                    <span>Now</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert-card">
+                    <h3>Recent Alerts</h3>
+                    <div class="alert-list" id="alertList">
+                        <div class="alert-item critical">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>ILLEGAL ELECTRIFICATION detected on Power Line PL-403</span>
+                            <small>Just now</small>
+                        </div>
+                        <div class="alert-item critical">
+                            <i class="fas fa-power-off"></i>
+                            <span>Automatic disconnection activated - Circuit PL-403</span>
+                            <small>1 minute ago</small>
+                        </div>
+                        <div class="alert-item warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Grid anomaly detected - Load imbalance on Transformer T-07</span>
+                            <small>3 minutes ago</small>
+                        </div>
+                        <div class="alert-item warning">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Unauthorized tap detected on Distribution Line DL-102</span>
+                            <small>4 minutes ago</small>
+                        </div>
+                        <div class="alert-item normal">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Power line monitoring system online - All sectors</span>
+                            <small>5 minutes ago</small>
+                        </div>
+                        <div class="alert-item normal">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Smart circuit breakers status verified</span>
+                            <small>8 minutes ago</small>
+                        </div>
+                        <div class="alert-item normal">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Grid monitoring sensors calibrated successfully</span>
+                            <small>12 minutes ago</small>
+                        </div>
+                        <div class="alert-item normal">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Data backup completed</span>
+                            <small>15 minutes ago</small>
+                        </div>
+                        <div class="alert-item normal">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Routine system check completed</span>
+                            <small>20 minutes ago</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="map-card">
+                    <div class="map-header">
+                        <h3><i class="fas fa-map-marked-alt"></i> Power Line Monitoring Grid</h3>
+                        <div class="map-controls">
+                            <button class="map-btn" onclick="refreshMap()">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button class="map-btn" onclick="toggleSatellite()">
+                                <i class="fas fa-satellite"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="map-container">
+                        <div class="map-background">
+                            <!-- Map grid overlay -->
+                            <div class="map-grid"></div>
+                            
+                            <!-- Road patterns -->
+                            <div class="road horizontal" style="top: 30%; left: 0; width: 100%;"></div>
+                            <div class="road horizontal" style="top: 70%; left: 0; width: 100%;"></div>
+                            <div class="road vertical" style="left: 25%; top: 0; height: 100%;"></div>
+                            <div class="road vertical" style="left: 75%; top: 0; height: 100%;"></div>
+                            
+                            <!-- Area labels -->
+                            <div class="area-label" style="top: 15%; left: 10%;">Sector A</div>
+                            <div class="area-label" style="top: 15%; right: 10%;">Sector B</div>
+                            <div class="area-label" style="bottom: 15%; left: 10%;">Sector C</div>
+                            <div class="area-label" style="bottom: 15%; right: 10%;">Sector D</div>
+                            
+                            <!-- Device markers with power line infrastructure locations -->
+                            <div class="device-marker online" style="top: 25%; left: 35%;" 
+                                 data-device="PL-403" data-location="Sector A - Power Line 403">
+                                <i class="fas fa-bolt"></i>
+                                <div class="marker-tooltip">
+                                    <strong>PL-403</strong><br>
+                                    Status: ALERT - Illegal Connection<br>
+                                    Voltage: 234.5V<br>
+                                    Current: 45.7A (Abnormal)
+                                </div>
+                            </div>
+                            
+                            <div class="device-marker online" style="top: 45%; left: 65%;" 
+                                 data-device="T-07" data-location="Sector B - Transformer 07">
+                                <i class="fas fa-plug"></i>
+                                <div class="marker-tooltip">
+                                    <strong>T-07</strong><br>
+                                    Status: Online<br>
+                                    Load: 85.2%<br>
+                                    Power: 156.8 kW
+                                </div>
+                            </div>
+                            
+                            <div class="device-marker online" style="top: 45%; left: 65%;" 
+                                 data-device="DL-102" data-location="Sector B - Distribution Line 102">
+                                <i class="fas fa-network-wired"></i>
+                                <div class="marker-tooltip">
+                                    <strong>DL-102</strong><br>
+                                    Status: Online<br>
+                                    Voltage: 228.7V<br>
+                                    Current: 32.4A
+                                </div>
+                            </div>
+                            
+                            <div class="device-marker warning" style="top: 55%; left: 20%;" 
+                                 data-device="CB-058" data-location="Sector C - Circuit Breaker 058">
+                                <i class="fas fa-power-off"></i>
+                                <div class="marker-tooltip">
+                                    <strong>CB-058</strong><br>
+                                    Status: Warning - Auto Disconnect Ready<br>
+                                    Voltage: 215.2V<br>
+                                    Current: 28.1A<br>
+                                    <span class="alert">Monitoring Illegal Tap!</span>
+                                </div>
+                            </div>
+                            
+                            <div class="device-marker online" style="top: 30%; left: 75%;" 
+                                 data-device="SS-14" data-location="Sector B - Substation 14">
+                                <i class="fas fa-building"></i>
+                                <div class="marker-tooltip">
+                                    <strong>SS-14</strong><br>
+                                    Status: Online<br>
+                                    Voltage: 231.8V<br>
+                                    Power: 450.2 kW
+                                </div>
+                            </div>
+                            
+                            <div class="device-marker offline" style="top: 35%; left: 45%;" 
+                                 data-device="PL-256" data-location="Sector A - Power Line 256">
+                                <i class="fas fa-bolt"></i>
+                                <div class="marker-tooltip">
+                                    <strong>PL-256</strong><br>
+                                    Status: Offline<br>
+                                    Last Seen: 2 mins ago<br>
+                                    <span class="alert">Communication Lost!</span>
+                                </div>
+                            </div>
+                            
+                            <div class="device-marker critical" style="top: 65%; left: 55%;" 
+                                 data-device="T-12" data-location="Sector C - Transformer Junction 12">
+                                <i class="fas fa-plug"></i>
+                                <div class="marker-tooltip">
+                                    <strong>T-12</strong><br>
+                                    Status: Critical<br>
+                                    Load: 125% (Overload)<br>
+                                    Power: 675.3 kW<br>
+                                    <span class="alert">ILLEGAL TAP DETECTED!</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="map-legend">
+                            <div class="legend-item">
+                                <div class="legend-marker online"></div>
+                                <span>Online (4)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-marker warning"></div>
+                                <span>Warning (1)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-marker critical"></div>
+                                <span>Critical (1)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-marker offline"></div>
+                                <span>Offline (1)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            <!-- Global Alerts Panel -->
+            <div class="global-alerts-panel" id="globalAlertsPanel">
+                <div class="alerts-panel-header">
+                    <h3><i class="fas fa-bell"></i> Global Alerts - All Fences</h3>
+                    <button class="close-panel" onclick="toggleGlobalAlerts()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="alerts-summary">
+                    <div class="summary-stats">
+                        <div class="stat critical">
+                            <span class="count">1</span>
+                            <span class="label">Critical</span>
+                        </div>
+                        <div class="stat warning">
+                            <span class="count">3</span>
+                            <span class="label">Warnings</span>
+                        </div>
+                        <div class="stat info">
+                            <span class="count">5</span>
+                            <span class="label">Info</span>
+                        </div>
+                        <div class="stat total">
+                            <span class="count">4</span>
+                            <span class="label">Fences Online</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alerts-list">
+                    <div class="alert-item critical">
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <div class="alert-title">Illegal Connection Detected</div>
+                            <div class="alert-location">Fence C - Kozhikode Rural</div>
+                            <div class="alert-time">2 minutes ago</div>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="btn-mini" onclick="switchToFence('fence-c')">View</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-item warning">
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <div class="alert-title">High Power Consumption</div>
+                            <div class="alert-location">Fence B - Kochi Industrial</div>
+                            <div class="alert-time">15 minutes ago</div>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="btn-mini" onclick="switchToFence('fence-b')">View</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-item warning">
+                        <div class="alert-icon">
+                            <i class="fas fa-thermometer-half"></i>
+                        </div>
+                        <div class="alert-content">
+                            <div class="alert-title">Temperature Warning</div>
+                            <div class="alert-location">Fence A - Trivandrum North</div>
+                            <div class="alert-time">32 minutes ago</div>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="btn-mini" onclick="switchToFence('fence-a')">View</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-item info">
+                        <div class="alert-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <div class="alert-title">Scheduled Maintenance Due</div>
+                            <div class="alert-location">Fence D - Kannur Coastal</div>
+                            <div class="alert-time">1 hour ago</div>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="btn-mini" onclick="switchToFence('fence-d')">View</button>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-item info">
+                        <div class="alert-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <div class="alert-title">System Health Check Completed</div>
+                            <div class="alert-location">All Fences</div>
+                            <div class="alert-time">2 hours ago</div>
+                        </div>
+                        <div class="alert-actions">
+                            <button class="btn-mini" onclick="switchToFence('overview')">View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Features & Future Scope Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Features & Future Scope</h2>
+            <p class="section-subtitle">Current capabilities and upcoming enhancements for comprehensive power line monitoring and illegal electrification prevention</p>
+            
+            <!-- Current Features -->
+            <div class="features-section">
+                <h3 class="subsection-title">
+                    <i class="fas fa-star"></i>
+                    Current Features
+                </h3>
+                <div class="features-grid">
+                    <div class="feature-card current">
+                        <div class="feature-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <h4>Power Line Monitoring</h4>
+                        <p>Comprehensive monitoring of power lines, transformers, and electrical infrastructure to detect illegal connections and grid anomalies</p>
+                        <span class="feature-status available">Available Now</span>
+                    </div>
+                    <div class="feature-card current">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Illegal Electrification Prevention</h4>
+                        <p>Smart detection and automatic prevention of unauthorized electrification attempts with instant disconnection capabilities</p>
+                        <span class="feature-status available">Available Now</span>
+                    </div>
+                    <div class="feature-card current">
+                        <div class="feature-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <h4>Remote Communication</h4>
+                        <p>GSM/WiFi connectivity for real-time data transmission and remote control capabilities</p>
+                        <span class="feature-status available">Available Now</span>
+                    </div>
+                    <div class="feature-card current">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h4>Instant Alerts</h4>
+                        <p>Immediate SMS and email notifications to KSEBL personnel when unauthorized activity is detected</p>
+                        <span class="feature-status available">Available Now</span>
+                    </div>
+                    <div class="feature-card current">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Data Analytics</h4>
+                        <p>AI-powered analytics to identify patterns and predict potential unauthorized usage</p>
+                        <span class="feature-status available">Available Now</span>
+                    </div>
+                    <div class="feature-card current">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Grid Control Dashboard</h4>
+                        <p>Advanced control interface for monitoring entire electrical grid and managing automatic disconnection systems</p>
+                        <span class="feature-status available">Available Now</span>
+                    </div>
+                    <div class="feature-card current">
+                        <div class="feature-icon">
+                            <i class="fas fa-power-off"></i>
+                        </div>
+                        <h4>Smart Circuit Breakers</h4>
+                        <p>Remote-controlled circuit breakers that automatically disconnect illegal connections and prevent unauthorized electrification</p>
+                        <span class="feature-status available">Available Now</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Future Scope -->
+            <div class="features-section future-scope">
+                <h3 class="subsection-title">
+                    <i class="fas fa-rocket"></i>
+                    Future Enhancements
+                </h3>
+                <div class="features-grid">
+                    <div class="feature-card future">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Grid Intelligence AI</h4>
+                        <p>Advanced machine learning algorithms to predict illegal electrification patterns and optimize grid protection strategies</p>
+                        <span class="feature-status coming">Coming Soon</span>
+                    </div>
+                    <div class="feature-card future">
+                        <div class="feature-icon">
+                            <i class="fas fa-satellite"></i>
+                        </div>
+                        <h4>Satellite Integration</h4>
+                        <p>IoT satellite connectivity for remote areas where GSM coverage is limited or unavailable</p>
+                        <span class="feature-status coming">Coming Soon</span>
+                    </div>
+                    <div class="feature-card future">
+                        <div class="feature-icon">
+                            <i class="fas fa-solar-panel"></i>
+                        </div>
+                        <h4>Solar Integration</h4>
+                        <p>Advanced solar power management with smart energy harvesting and weather prediction</p>
+                        <span class="feature-status planning">In Planning</span>
+                    </div>
+                    <div class="feature-card future">
+                        <div class="feature-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h4>Drone Surveillance</h4>
+                        <p>Automated drone patrols for power line inspection and real-time monitoring of electrical infrastructure integrity</p>
+                        <span class="feature-status planning">In Planning</span>
+                    </div>
+                    <div class="feature-card future">
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h4>Geographic Mapping</h4>
+                        <p>Advanced GIS integration for precise location tracking and regional theft pattern analysis</p>
+                        <span class="feature-status coming">Coming Soon</span>
+                    </div>
+                    <div class="feature-card future">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4>Multi-Tenant Platform</h4>
+                        <p>Scalable cloud platform supporting multiple utility companies with role-based access control</p>
+                        <span class="feature-status planning">In Planning</span>
+                    </div>
+                    <div class="feature-card future">
+                        <div class="feature-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h4>Smart Grid Integration</h4>
+                        <p>Full integration with smart grid infrastructure for automated load balancing and grid optimization</p>
+                        <span class="feature-status coming">Coming Soon</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Roadmap -->
+            <div class="feature-roadmap">
+                <h3 class="subsection-title">
+                    <i class="fas fa-road"></i>
+                    Development Roadmap
+                </h3>
+                <div class="roadmap-container">
+                    <div class="roadmap-item completed">
+                        <div class="roadmap-phase">Phase 1</div>
+                        <div class="roadmap-content">
+                            <h4>Foundation Release</h4>
+                            <p>Core monitoring, tamper detection, and real-time alerts</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item active">
+                        <div class="roadmap-phase">Phase 2</div>
+                        <div class="roadmap-content">
+                            <h4>AI Enhancement</h4>
+                            <p>Machine learning predictions and satellite connectivity</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item upcoming">
+                        <div class="roadmap-phase">Phase 3</div>
+                        <div class="roadmap-content">
+                            <h4>Platform Expansion</h4>
+                            <p>Multi-tenant cloud platform and advanced GIS integration</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Real-Time Data Analytics Section -->
+            <div class="realtime-analytics-section">
+                <h3 class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    Real-Time Data Analytics
+                    <span class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        LIVE
+                    </span>
+                </h3>
+                
+                <!-- Connection Status Bar -->
+                <div class="connection-status-bar">
+                    <div class="connection-info">
+                        <div class="websocket-status">
+                            <i class="fas fa-wifi connection-icon online" id="connectionIcon"></i>
+                            <span id="connectionStatus">Connected to ESP32</span>
+                            <span class="data-rate" id="dataRate">32.4 packets/sec</span>
+                        </div>
+                        <div class="last-update">
+                            Last Update: <span id="lastUpdate">2.1 seconds ago</span>
+                        </div>
+                    </div>
+                    <div class="stream-controls">
+                        <button class="stream-control-btn" id="pauseStream" title="Pause Data Stream">
+                            <i class="fas fa-pause"></i>
+                        </button>
+                        <button class="stream-control-btn" id="resetCharts" title="Reset Charts">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Live Charts Grid -->
+                <div class="live-charts-grid">
+                    <!-- Voltage Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4>Voltage (V)</h4>
+                            <div class="chart-value">
+                                <span class="current-reading" id="voltageReading">231.2</span>
+                                <span class="trend-indicator" id="voltageTrend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +1.2%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chart-canvas">
+                            <canvas id="voltageChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="chart-stats">
+                            <div class="stat">
+                                <span class="label">Min</span>
+                                <span class="value" id="voltageMin">228.1</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">Max</span>
+                                <span class="value" id="voltageMax">234.7</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">Avg</span>
+                                <span class="value" id="voltageAvg">231.5</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Current Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4>Current (A)</h4>
+                            <div class="chart-value">
+                                <span class="current-reading" id="currentReading">15.2</span>
+                                <span class="trend-indicator warning" id="currentTrend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +8.7%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chart-canvas">
+                            <canvas id="currentChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="chart-stats">
+                            <div class="stat">
+                                <span class="label">Min</span>
+                                <span class="value" id="currentMin">12.1</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">Max</span>
+                                <span class="value" id="currentMax">18.7</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">Avg</span>
+                                <span class="value" id="currentAvg">15.0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Power Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4>Power (kW)</h4>
+                            <div class="chart-value">
+                                <span class="current-reading" id="powerReading">3.5</span>
+                                <span class="trend-indicator" id="powerTrend">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +2.9%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chart-canvas">
+                            <canvas id="powerChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="chart-stats">
+                            <div class="stat">
+                                <span class="label">Min</span>
+                                <span class="value" id="powerMin">2.1</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">Max</span>
+                                <span class="value" id="powerMax">4.2</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">Avg</span>
+                                <span class="value" id="powerAvg">3.1</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- System Health Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h4>System Health</h4>
+                            <div class="chart-value">
+                                <span class="current-reading health" id="healthReading">97%</span>
+                                <span class="trend-indicator" id="healthTrend">
+                                    <i class="fas fa-check"></i>
+                                    Excellent
+                                </span>
+                            </div>
+                        </div>
+                        <div class="chart-canvas">
+                            <canvas id="healthChart" width="400" height="200"></canvas>
+                        </div>
+                        <div class="chart-stats">
+                            <div class="stat">
+                                <span class="label">CPU</span>
+                                <span class="value" id="cpuUsage">23%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">Memory</span>
+                                <span class="value" id="memoryUsage">67%</span>
+                            </div>
+                            <div class="stat">
+                                <span class="label">Temp</span>
+                                <span class="value" id="tempReading">42°C</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Data Streaming Controls -->
+                <div class="stream-controls-panel">
+                    <div class="control-group">
+                        <label>Update Frequency:</label>
+                        <select id="updateFrequency" class="frequency-selector">
+                            <option value="1000">1 second</option>
+                            <option value="2000" selected>2 seconds</option>
+                            <option value="5000">5 seconds</option>
+                            <option value="10000">10 seconds</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label>Data Points:</label>
+                        <select id="dataPoints" class="points-selector">
+                            <option value="20">Last 20 readings</option>
+                            <option value="50" selected>Last 50 readings</option>
+                            <option value="100">Last 100 readings</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <button class="export-btn" id="exportData">
+                            <i class="fas fa-download"></i>
+                            Export CSV
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interactive Geographical Map Section -->
+            <div class="geo-map-section">
+                <h3 class="section-title">
+                    <i class="fas fa-map-marked-alt"></i>
+                    Kerala Power Grid Overview
+                    <div class="map-controls">
+                        <button class="map-control-btn" id="showAllFences" title="Show All Fences">
+                            <i class="fas fa-eye"></i>
+                            All Fences
+                        </button>
+                        <button class="map-control-btn" id="focusAlerts" title="Focus on Alerts">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Alert Zones
+                        </button>
+                        <button class="map-control-btn" id="weatherOverlay" title="Weather Overlay">
+                            <i class="fas fa-cloud"></i>
+                            Weather
+                        </button>
+                    </div>
+                </h3>
+                
+                <!-- Kerala State Map -->
+                <div class="kerala-map-container">
+                    <div class="kerala-map">
+                        <!-- Kerala State Outline -->
+                        <svg class="kerala-outline" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Simplified Kerala state shape -->
+                            <path d="M50 50 Q80 30 120 50 L150 80 Q180 100 200 140 L220 180 Q240 220 230 260 L240 300 Q250 340 240 380 L220 420 Q200 460 180 500 L160 540 Q140 580 100 590 L80 580 Q60 560 50 520 L40 480 Q30 440 40 400 L50 360 Q45 320 50 280 L60 240 Q55 200 50 160 L45 120 Q45 80 50 50 Z" 
+                                  fill="url(#keralaGradient)" 
+                                  stroke="#1e40af" 
+                                  stroke-width="2"/>
+                            
+                            <!-- Gradient Definition -->
+                            <defs>
+                                <linearGradient id="keralaGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#e0f2fe;stop-opacity:1" />
+                                    <stop offset="50%" style="stop-color:#bae6fd;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#7dd3fc;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            
+                            <!-- District Boundaries -->
+                            <line x1="50" y1="150" x2="200" y2="150" stroke="#64748b" stroke-width="1" stroke-dasharray="5,5"/>
+                            <line x1="60" y1="250" x2="230" y2="250" stroke="#64748b" stroke-width="1" stroke-dasharray="5,5"/>
+                            <line x1="70" y1="350" x2="240" y2="350" stroke="#64748b" stroke-width="1" stroke-dasharray="5,5"/>
+                            <line x1="80" y1="450" x2="200" y2="450" stroke="#64748b" stroke-width="1" stroke-dasharray="5,5"/>
+                            
+                            <!-- Region Labels -->
+                            <text x="120" y="100" class="region-label" text-anchor="middle">Kasaragod</text>
+                            <text x="140" y="200" class="region-label" text-anchor="middle">Kozhikode</text>
+                            <text x="160" y="300" class="region-label" text-anchor="middle">Kochi</text>
+                            <text x="140" y="400" class="region-label" text-anchor="middle">Kollam</text>
+                            <text x="120" y="500" class="region-label" text-anchor="middle">Trivandrum</text>
+                        </svg>
+                        
+                        <!-- Fence Location Markers -->
+                        <div class="fence-marker online" id="fence-a-marker" data-fence="fence-a" style="top: 80%; left: 30%;">
+                            <div class="marker-pulse"></div>
+                            <div class="marker-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="marker-tooltip">
+                                <div class="tooltip-header">
+                                    <strong>Trivandrum North</strong>
+                                    <span class="status-badge online">Online</span>
+                                </div>
+                                <div class="tooltip-stats">
+                                    <div class="stat-item">
+                                        <span class="label">Voltage:</span>
+                                        <span class="value">230.5V</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Current:</span>
+                                        <span class="value">15.2A</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Power:</span>
+                                        <span class="value">3.5kW</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Health:</span>
+                                        <span class="value health-good">97%</span>
+                                    </div>
+                                </div>
+                                <div class="tooltip-actions">
+                                    <button class="mini-btn" onclick="switchToFence('fence-a')">Monitor</button>
+                                    <button class="mini-btn" onclick="focusOnFence('fence-a')">Focus</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="fence-marker online" id="fence-b-marker" data-fence="fence-b" style="top: 50%; left: 45%;">
+                            <div class="marker-pulse"></div>
+                            <div class="marker-icon">
+                                <i class="fas fa-industry"></i>
+                            </div>
+                            <div class="marker-tooltip">
+                                <div class="tooltip-header">
+                                    <strong>Kochi Industrial</strong>
+                                    <span class="status-badge online">Online</span>
+                                </div>
+                                <div class="tooltip-stats">
+                                    <div class="stat-item">
+                                        <span class="label">Voltage:</span>
+                                        <span class="value">240.2V</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Current:</span>
+                                        <span class="value">18.7A</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Power:</span>
+                                        <span class="value">4.8kW</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Health:</span>
+                                        <span class="value health-good">94%</span>
+                                    </div>
+                                </div>
+                                <div class="tooltip-actions">
+                                    <button class="mini-btn" onclick="switchToFence('fence-b')">Monitor</button>
+                                    <button class="mini-btn" onclick="focusOnFence('fence-b')">Focus</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="fence-marker warning" id="fence-c-marker" data-fence="fence-c" style="top: 35%; left: 55%;">
+                            <div class="marker-pulse warning"></div>
+                            <div class="marker-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="marker-tooltip">
+                                <div class="tooltip-header">
+                                    <strong>Kozhikode Coastal</strong>
+                                    <span class="status-badge warning">Warning</span>
+                                </div>
+                                <div class="tooltip-stats">
+                                    <div class="stat-item">
+                                        <span class="label">Voltage:</span>
+                                        <span class="value warning">218.3V</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Current:</span>
+                                        <span class="value">21.5A</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Power:</span>
+                                        <span class="value">5.2kW</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Health:</span>
+                                        <span class="value health-warning">78%</span>
+                                    </div>
+                                </div>
+                                <div class="tooltip-actions">
+                                    <button class="mini-btn" onclick="switchToFence('fence-c')">Monitor</button>
+                                    <button class="mini-btn" onclick="focusOnFence('fence-c')">Focus</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="fence-marker online" id="fence-d-marker" data-fence="fence-d" style="top: 20%; left: 40%;">
+                            <div class="marker-pulse"></div>
+                            <div class="marker-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <div class="marker-tooltip">
+                                <div class="tooltip-header">
+                                    <strong>Kannur Hills</strong>
+                                    <span class="status-badge online">Online</span>
+                                </div>
+                                <div class="tooltip-stats">
+                                    <div class="stat-item">
+                                        <span class="label">Voltage:</span>
+                                        <span class="value">235.1V</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Current:</span>
+                                        <span class="value">13.8A</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Power:</span>
+                                        <span class="value">3.2kW</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="label">Health:</span>
+                                        <span class="value health-excellent">99%</span>
+                                    </div>
+                                </div>
+                                <div class="tooltip-actions">
+                                    <button class="mini-btn" onclick="switchToFence('fence-d')">Monitor</button>
+                                    <button class="mini-btn" onclick="focusOnFence('fence-d')">Focus</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Power Transmission Lines -->
+                        <svg class="transmission-lines" viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Main transmission line -->
+                            <path d="M120 500 Q160 400 180 300 Q200 200 160 120" 
+                                  stroke="#3b82f6" 
+                                  stroke-width="3" 
+                                  fill="none" 
+                                  stroke-dasharray="10,5"
+                                  class="transmission-line main"/>
+                            
+                            <!-- Branch lines -->
+                            <path d="M180 300 L240 350" stroke="#10b981" stroke-width="2" fill="none" class="transmission-line branch"/>
+                            <path d="M160 200 L220 180" stroke="#10b981" stroke-width="2" fill="none" class="transmission-line branch"/>
+                            <path d="M140 400 L100 420" stroke="#10b981" stroke-width="2" fill="none" class="transmission-line branch"/>
+                        </svg>
+                        
+                        <!-- Weather Overlay (Initially Hidden) -->
+                        <div class="weather-overlay" id="weatherOverlay" style="display: none;">
+                            <div class="weather-zone" style="top: 15%; left: 35%; width: 30%; height: 25%;">
+                                <div class="weather-info">
+                                    <i class="fas fa-cloud-rain"></i>
+                                    <span>Heavy Rain</span>
+                                    <small>Risk: High</small>
+                                </div>
+                            </div>
+                            <div class="weather-zone" style="top: 45%; left: 40%; width: 25%; height: 20%;">
+                                <div class="weather-info">
+                                    <i class="fas fa-sun"></i>
+                                    <span>Clear</span>
+                                    <small>Risk: Low</small>
+                                </div>
+                            </div>
+                            <div class="weather-zone" style="top: 70%; left: 25%; width: 35%; height: 25%;">
+                                <div class="weather-info">
+                                    <i class="fas fa-wind"></i>
+                                    <span>Strong Winds</span>
+                                    <small>Risk: Medium</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Map Legend -->
+                    <div class="map-legend">
+                        <div class="legend-section">
+                            <h4>Fence Status</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-marker online"></div>
+                                    <span>Online & Healthy</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-marker warning"></div>
+                                    <span>Warning State</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-marker critical"></div>
+                                    <span>Critical Alert</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-marker offline"></div>
+                                    <span>Offline</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="legend-section">
+                            <h4>Infrastructure</h4>
+                            <div class="legend-items">
+                                <div class="legend-item">
+                                    <div class="legend-line main"></div>
+                                    <span>Main Transmission</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-line branch"></div>
+                                    <span>Distribution Line</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Map Statistics -->
+                <div class="map-statistics">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">Active Fences</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">16.7</div>
+                            <div class="stat-label">Avg Power (kW)</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">92%</div>
+                            <div class="stat-label">Grid Health</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <div class="stat-value">1</div>
+                            <div class="stat-label">Active Alerts</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Predictive Analytics Section -->
+            <div class="predictive-analytics-section">
+                <h3 class="section-title">
+                    <i class="fas fa-brain"></i>
+                    AI Predictive Analytics
+                    <div class="ai-status">
+                        <span class="ai-indicator">
+                            <span class="ai-pulse"></span>
+                            AI ACTIVE
+                        </span>
+                    </div>
+                </h3>
+                
+                <!-- AI Insights Overview -->
+                <div class="ai-insights-grid">
+                    <!-- Failure Prediction Card -->
+                    <div class="prediction-card failure-prediction">
+                        <div class="card-header">
+                            <h4>
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Failure Prediction
+                            </h4>
+                            <div class="prediction-confidence">
+                                <span class="confidence-badge high">97% Confidence</span>
+                            </div>
+                        </div>
+                        <div class="prediction-content">
+                            <div class="risk-meter">
+                                <div class="risk-level high" style="width: 78%;">
+                                    <span class="risk-label">High Risk</span>
+                                </div>
+                            </div>
+                            <div class="prediction-details">
+                                <div class="predicted-failure">
+                                    <strong>Kozhikode Coastal - Transformer T-07</strong>
+                                    <p>Predicted failure in 3-5 days due to voltage irregularities and temperature spikes</p>
+                                </div>
+                                <div class="failure-factors">
+                                    <div class="factor">
+                                        <span class="factor-name">Voltage Instability</span>
+                                        <div class="factor-bar">
+                                            <div class="factor-level" style="width: 85%; background: #ef4444;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="factor">
+                                        <span class="factor-name">Temperature Stress</span>
+                                        <div class="factor-bar">
+                                            <div class="factor-level" style="width: 72%; background: #f59e0b;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="factor">
+                                        <span class="factor-name">Load Fluctuation</span>
+                                        <div class="factor-bar">
+                                            <div class="factor-level" style="width: 68%; background: #f59e0b;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="prediction-actions">
+                                    <button class="action-btn primary">Schedule Maintenance</button>
+                                    <button class="action-btn secondary">View Analysis</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pattern Recognition Card -->
+                    <div class="prediction-card pattern-recognition">
+                        <div class="card-header">
+                            <h4>
+                                <i class="fas fa-chart-line"></i>
+                                Pattern Analysis
+                            </h4>
+                            <div class="analysis-period">
+                                <select id="patternPeriod" class="period-selector">
+                                    <option value="7d">Last 7 Days</option>
+                                    <option value="30d" selected>Last 30 Days</option>
+                                    <option value="90d">Last 90 Days</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="prediction-content">
+                            <div class="pattern-insights">
+                                <div class="insight-item">
+                                    <div class="insight-icon trend-up">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </div>
+                                    <div class="insight-content">
+                                        <h5>Power Consumption Trend</h5>
+                                        <p>15% increase during evening hours (6-9 PM) across all zones</p>
+                                        <small>Consistent pattern for 28 days</small>
+                                    </div>
+                                </div>
+                                <div class="insight-item">
+                                    <div class="insight-icon warning">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                    <div class="insight-content">
+                                        <h5>Voltage Drop Pattern</h5>
+                                        <p>Recurring voltage drops every Monday 8-10 AM in Industrial zones</p>
+                                        <small>Likely due to factory startup loads</small>
+                                    </div>
+                                </div>
+                                <div class="insight-item">
+                                    <div class="insight-icon normal">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="insight-content">
+                                        <h5>Efficiency Optimization</h5>
+                                        <p>Load balancing algorithm improved efficiency by 8.3%</p>
+                                        <small>Recommended for all fence sections</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pattern-chart">
+                                <canvas id="patternChart" width="300" height="150"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Maintenance Recommendations -->
+                    <div class="prediction-card maintenance-recommendations">
+                        <div class="card-header">
+                            <h4>
+                                <i class="fas fa-tools"></i>
+                                Smart Maintenance
+                            </h4>
+                            <div class="urgency-indicator">
+                                <span class="urgency-badge medium">2 Urgent Tasks</span>
+                            </div>
+                        </div>
+                        <div class="prediction-content">
+                            <div class="maintenance-list">
+                                <div class="maintenance-item urgent">
+                                    <div class="maintenance-priority">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Urgent</span>
+                                    </div>
+                                    <div class="maintenance-details">
+                                        <h5>Transformer Inspection - Kozhikode</h5>
+                                        <p>AI detected temperature anomalies. Immediate inspection required.</p>
+                                        <div class="maintenance-meta">
+                                            <span class="eta">ETA: 2 hours</span>
+                                            <span class="priority">Priority: Critical</span>
+                                        </div>
+                                    </div>
+                                    <div class="maintenance-actions">
+                                        <button class="maintenance-btn">Assign Team</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="maintenance-item high">
+                                    <div class="maintenance-priority">
+                                        <i class="fas fa-circle"></i>
+                                        <span>High</span>
+                                    </div>
+                                    <div class="maintenance-details">
+                                        <h5>Cable Tension Check - Trivandrum</h5>
+                                        <p>Predictive model suggests preventive maintenance due to weather stress.</p>
+                                        <div class="maintenance-meta">
+                                            <span class="eta">ETA: 1 day</span>
+                                            <span class="priority">Priority: High</span>
+                                        </div>
+                                    </div>
+                                    <div class="maintenance-actions">
+                                        <button class="maintenance-btn">Schedule</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="maintenance-item medium">
+                                    <div class="maintenance-priority">
+                                        <i class="fas fa-circle"></i>
+                                        <span>Medium</span>
+                                    </div>
+                                    <div class="maintenance-details">
+                                        <h5>Routine Inspection - Kochi</h5>
+                                        <p>Monthly scheduled maintenance for industrial sector power lines.</p>
+                                        <div class="maintenance-meta">
+                                            <span class="eta">ETA: 3 days</span>
+                                            <span class="priority">Priority: Medium</span>
+                                        </div>
+                                    </div>
+                                    <div class="maintenance-actions">
+                                        <button class="maintenance-btn">Plan</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="maintenance-summary">
+                                <div class="summary-stats">
+                                    <div class="stat">
+                                        <span class="stat-value">3</span>
+                                        <span class="stat-label">Tasks Pending</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-value">3</span>
+                                        <span class="stat-label">Teams Required</span>
+                                    </div>
+                                    <div class="stat">
+                                        <span class="stat-value">2.5h</span>
+                                        <span class="stat-label">Avg Duration</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Performance Metrics -->
+                <div class="ai-performance-section">
+                    <h4>AI Model Performance</h4>
+                    <div class="performance-metrics">
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <i class="fas fa-bullseye"></i>
+                                <span>Prediction Accuracy</span>
+                            </div>
+                            <div class="metric-value">
+                                <span class="value">94.7%</span>
+                                <span class="trend positive">+2.3%</span>
+                            </div>
+                            <div class="metric-chart">
+                                <div class="chart-bar" style="height: 94.7%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <i class="fas fa-clock"></i>
+                                <span>Early Detection</span>
+                            </div>
+                            <div class="metric-value">
+                                <span class="value">4.2 days</span>
+                                <span class="trend positive">+1.1d</span>
+                            </div>
+                            <div class="metric-chart">
+                                <div class="chart-bar" style="height: 84%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Efficiency Gain</span>
+                            </div>
+                            <div class="metric-value">
+                                <span class="value">24%</span>
+                                <span class="trend positive">+18%</span>
+                            </div>
+                            <div class="metric-chart">
+                                <div class="chart-bar" style="height: 88%;"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="metric-card">
+                            <div class="metric-header">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Prevented Failures</span>
+                            </div>
+                            <div class="metric-value">
+                                <span class="value">17</span>
+                                <span class="trend positive">+5</span>
+                            </div>
+                            <div class="metric-chart">
+                                <div class="chart-bar" style="height: 95%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI Learning Status -->
+                <div class="ai-learning-status">
+                    <div class="learning-header">
+                        <h4>
+                            <i class="fas fa-graduation-cap"></i>
+                            Continuous Learning Status
+                        </h4>
+                        <div class="learning-controls">
+                            <button class="control-btn" id="trainModel">
+                                <i class="fas fa-play"></i>
+                                Retrain Model
+                            </button>
+                            <button class="control-btn" id="exportInsights">
+                                <i class="fas fa-download"></i>
+                                Export Insights
+                            </button>
+                        </div>
+                    </div>
+                    <div class="learning-progress">
+                        <div class="progress-item">
+                            <span class="progress-label">Data Collection</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%;"></div>
+                            </div>
+                            <span class="progress-value">100%</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-label">Pattern Analysis</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 87%;"></div>
+                            </div>
+                            <span class="progress-value">87%</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-label">Model Training</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 72%;"></div>
+                            </div>
+                            <span class="progress-value">72%</span>
+                        </div>
+                        <div class="progress-item">
+                            <span class="progress-label">Validation</span>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%;"></div>
+                            </div>
+                            <span class="progress-value">45%</span>
+                        </div>
+                    </div>
+                    <div class="learning-info">
+                        <div class="info-item">
+                            <i class="fas fa-database"></i>
+                            <span>Training Data: 2.4M records</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-clock"></i>
+                            <span>Last Update: 23 minutes ago</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-sync"></i>
+                            <span>Next Training: 4 hours</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Smart Alert Automation Section -->
+            <div class="alert-automation-section">
+                <h3 class="section-title">
+                    <i class="fas fa-bell"></i>
+                    Smart Alert Automation
+                    <div class="automation-status">
+                        <span class="automation-indicator active">
+                            <span class="automation-pulse"></span>
+                            AUTO-PILOT ON
+                        </span>
+                    </div>
+                </h3>
+                
+                <!-- Alert Rules Configuration -->
+                <div class="alert-rules-grid">
+                    <!-- Critical Alert Rules -->
+                    <div class="alert-rule-card critical">
+                        <div class="rule-header">
+                            <h4>
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Critical Alert Rules
+                            </h4>
+                            <div class="rule-status">
+                                <span class="status-indicator active">Active</span>
+                            </div>
+                        </div>
+                        <div class="rule-conditions">
+                            <div class="condition-item">
+                                <div class="condition-label">Voltage Drop > 20V</div>
+                                <div class="condition-action">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span>Immediate SMS to Field Team</span>
+                                </div>
+                            </div>
+                            <div class="condition-item">
+                                <div class="condition-label">Current Spike > 25A</div>
+                                <div class="condition-action">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span>Emergency Call + Auto-Shutdown</span>
+                                </div>
+                            </div>
+                            <div class="condition-item">
+                                <div class="condition-label">Equipment Offline > 10min</div>
+                                <div class="condition-action">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span>Supervisor Alert + Dispatch</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rule-escalation">
+                            <h5>Auto-Escalation Timeline</h5>
+                            <div class="escalation-timeline">
+                                <div class="timeline-step immediate">
+                                    <span class="step-time">0 min</span>
+                                    <span class="step-action">Field Team SMS</span>
+                                </div>
+                                <div class="timeline-step urgent">
+                                    <span class="step-time">5 min</span>
+                                    <span class="step-action">Supervisor Call</span>
+                                </div>
+                                <div class="timeline-step critical">
+                                    <span class="step-time">15 min</span>
+                                    <span class="step-action">Management Alert</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Warning Alert Rules -->
+                    <div class="alert-rule-card warning">
+                        <div class="rule-header">
+                            <h4>
+                                <i class="fas fa-exclamation-circle"></i>
+                                Warning Alert Rules
+                            </h4>
+                            <div class="rule-status">
+                                <span class="status-indicator active">Active</span>
+                            </div>
+                        </div>
+                        <div class="rule-conditions">
+                            <div class="condition-item">
+                                <div class="condition-label">Temperature > 45°C</div>
+                                <div class="condition-action">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span>Maintenance Alert</span>
+                                </div>
+                            </div>
+                            <div class="condition-item">
+                                <div class="condition-label">Load Factor > 90%</div>
+                                <div class="condition-action">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span>Load Balancing Trigger</span>
+                                </div>
+                            </div>
+                            <div class="condition-item">
+                                <div class="condition-label">Efficiency Drop > 15%</div>
+                                <div class="condition-action">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span>Performance Review Alert</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rule-escalation">
+                            <h5>Auto-Escalation Timeline</h5>
+                            <div class="escalation-timeline">
+                                <div class="timeline-step normal">
+                                    <span class="step-time">0 min</span>
+                                    <span class="step-action">System Log</span>
+                                </div>
+                                <div class="timeline-step warning">
+                                    <span class="step-time">30 min</span>
+                                    <span class="step-action">Team Notification</span>
+                                </div>
+                                <div class="timeline-step urgent">
+                                    <span class="step-time">2 hours</span>
+                                    <span class="step-action">Supervisor Review</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Smart Response System -->
+                    <div class="alert-rule-card smart-response">
+                        <div class="rule-header">
+                            <h4>
+                                <i class="fas fa-brain"></i>
+                                AI Smart Response
+                            </h4>
+                            <div class="rule-status">
+                                <span class="status-indicator learning">Learning</span>
+                            </div>
+                        </div>
+                        <div class="smart-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h5>Pattern-Based Alerts</h5>
+                                    <p>AI detects unusual patterns and creates proactive alerts before failures occur</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h5>Dynamic Team Assignment</h5>
+                                    <p>Automatically assigns the best available team based on location and expertise</p>
+                                </div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="feature-content">
+                                    <h5>Predictive Maintenance</h5>
+                                    <p>Schedules maintenance before issues become critical based on AI predictions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Live Alert Activity -->
+                <div class="live-alert-activity">
+                    <h4>
+                        <i class="fas fa-activity"></i>
+                        Live Alert Activity
+                        <span class="activity-count">3 Active Processes</span>
+                    </h4>
+                    <div class="alert-activity-list">
+                        <div class="activity-item critical processing">
+                            <div class="activity-status">
+                                <div class="status-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="activity-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 75%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-details">
+                                <h5>Voltage Anomaly - Kozhikode Coastal</h5>
+                                <p>Auto-escalation in progress: Field team dispatched, ETA 12 minutes</p>
+                                <div class="activity-timeline">
+                                    <div class="timeline-event completed">
+                                        <span class="event-time">14:23</span>
+                                        <span class="event-desc">Alert detected & SMS sent</span>
+                                    </div>
+                                    <div class="timeline-event completed">
+                                        <span class="event-time">14:25</span>
+                                        <span class="event-desc">Field team confirmed dispatch</span>
+                                    </div>
+                                    <div class="timeline-event active">
+                                        <span class="event-time">14:28</span>
+                                        <span class="event-desc">Team en route (ETA: 12 min)</span>
+                                    </div>
+                                    <div class="timeline-event pending">
+                                        <span class="event-time">14:40</span>
+                                        <span class="event-desc">On-site assessment</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="action-btn track">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Track Team
+                                </button>
+                                <button class="action-btn contact">
+                                    <i class="fas fa-phone"></i>
+                                    Call Team
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item warning processing">
+                            <div class="activity-status">
+                                <div class="status-icon">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div class="activity-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 45%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-details">
+                                <h5>Temperature Warning - Trivandrum North</h5>
+                                <p>Maintenance team alerted, scheduling inspection for tomorrow morning</p>
+                                <div class="activity-meta">
+                                    <span class="priority-badge medium">Medium Priority</span>
+                                    <span class="eta-badge">Scheduled: Tomorrow 9:00 AM</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="action-btn schedule">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    Reschedule
+                                </button>
+                                <button class="action-btn details">
+                                    <i class="fas fa-info-circle"></i>
+                                    Details
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item info processing">
+                            <div class="activity-status">
+                                <div class="status-icon">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div class="activity-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 90%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-details">
+                                <h5>Routine Maintenance Reminder - Kochi Industrial</h5>
+                                <p>AI-scheduled preventive maintenance based on usage patterns</p>
+                                <div class="activity-meta">
+                                    <span class="priority-badge low">Low Priority</span>
+                                    <span class="ai-badge">AI Recommended</span>
+                                </div>
+                            </div>
+                            <div class="activity-actions">
+                                <button class="action-btn approve">
+                                    <i class="fas fa-check"></i>
+                                    Approve
+                                </button>
+                                <button class="action-btn defer">
+                                    <i class="fas fa-clock"></i>
+                                    Defer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Communication Channels -->
+                <div class="communication-channels">
+                    <h4>
+                        <i class="fas fa-broadcast-tower"></i>
+                        Active Communication Channels
+                    </h4>
+                    <div class="channels-grid">
+                        <div class="channel-card sms">
+                            <div class="channel-header">
+                                <i class="fas fa-sms"></i>
+                                <span>SMS Gateway</span>
+                                <div class="channel-status online">Online</div>
+                            </div>
+                            <div class="channel-stats">
+                                <div class="stat">
+                                    <span class="stat-value">247</span>
+                                    <span class="stat-label">Messages Today</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">98.7%</span>
+                                    <span class="stat-label">Delivery Rate</span>
+                                </div>
+                            </div>
+                            <div class="channel-contacts">
+                                <h5>Active Recipients</h5>
+                                <div class="contact-list">
+                                    <div class="contact-item">
+                                        <span class="contact-name">Field Team Alpha</span>
+                                        <span class="contact-number">+91 98765 43210</span>
+                                    </div>
+                                    <div class="contact-item">
+                                        <span class="contact-name">Supervisor Kumar</span>
+                                        <span class="contact-number">+91 98765 43211</span>
+                                    </div>
+                                    <div class="contact-item">
+                                        <span class="contact-name">Emergency Control</span>
+                                        <span class="contact-number">+91 98765 43212</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="channel-card email">
+                            <div class="channel-header">
+                                <i class="fas fa-envelope"></i>
+                                <span>Email System</span>
+                                <div class="channel-status online">Online</div>
+                            </div>
+                            <div class="channel-stats">
+                                <div class="stat">
+                                    <span class="stat-value">156</span>
+                                    <span class="stat-label">Emails Today</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">100%</span>
+                                    <span class="stat-label">Delivery Rate</span>
+                                </div>
+                            </div>
+                            <div class="channel-contacts">
+                                <h5>Distribution Lists</h5>
+                                <div class="contact-list">
+                                    <div class="contact-item">
+                                        <span class="contact-name">Critical Alerts</span>
+                                        <span class="contact-count">12 recipients</span>
+                                    </div>
+                                    <div class="contact-item">
+                                        <span class="contact-name">Maintenance Team</span>
+                                        <span class="contact-count">8 recipients</span>
+                                    </div>
+                                    <div class="contact-item">
+                                        <span class="contact-name">Management</span>
+                                        <span class="contact-count">5 recipients</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="channel-card voice">
+                            <div class="channel-header">
+                                <i class="fas fa-phone"></i>
+                                <span>Voice Alerts</span>
+                                <div class="channel-status online">Online</div>
+                            </div>
+                            <div class="channel-stats">
+                                <div class="stat">
+                                    <span class="stat-value">23</span>
+                                    <span class="stat-label">Calls Today</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-value">91.3%</span>
+                                    <span class="stat-label">Answer Rate</span>
+                                </div>
+                            </div>
+                            <div class="channel-contacts">
+                                <h5>Emergency Contacts</h5>
+                                <div class="contact-list">
+                                    <div class="contact-item">
+                                        <span class="contact-name">Emergency Hotline</span>
+                                        <span class="contact-number">1-800-POWER</span>
+                                    </div>
+                                    <div class="contact-item">
+                                        <span class="contact-name">Field Supervisor</span>
+                                        <span class="contact-number">+91 98765 43220</span>
+                                    </div>
+                                    <div class="contact-item">
+                                        <span class="contact-name">Control Room</span>
+                                        <span class="contact-number">+91 98765 43221</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Alert Configuration Panel -->
+                <div class="alert-config-panel">
+                    <h4>
+                        <i class="fas fa-cog"></i>
+                        Alert Configuration
+                    </h4>
+                    <div class="config-sections">
+                        <div class="config-section">
+                            <h5>Notification Preferences</h5>
+                            <div class="config-options">
+                                <div class="option-item">
+                                    <label class="option-label">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Instant SMS for critical alerts
+                                    </label>
+                                </div>
+                                <div class="option-item">
+                                    <label class="option-label">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Email summaries every 4 hours
+                                    </label>
+                                </div>
+                                <div class="option-item">
+                                    <label class="option-label">
+                                        <input type="checkbox">
+                                        <span class="checkmark"></span>
+                                        Voice calls for equipment failures
+                                    </label>
+                                </div>
+                                <div class="option-item">
+                                    <label class="option-label">
+                                        <input type="checkbox" checked>
+                                        <span class="checkmark"></span>
+                                        Push notifications to mobile app
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="config-section">
+                            <h5>Escalation Timing</h5>
+                            <div class="timing-controls">
+                                <div class="timing-item">
+                                    <label>Critical Alert Escalation:</label>
+                                    <select class="timing-select">
+                                        <option value="5">5 minutes</option>
+                                        <option value="10">10 minutes</option>
+                                        <option value="15" selected>15 minutes</option>
+                                        <option value="30">30 minutes</option>
+                                    </select>
+                                </div>
+                                <div class="timing-item">
+                                    <label>Warning Alert Escalation:</label>
+                                    <select class="timing-select">
+                                        <option value="30">30 minutes</option>
+                                        <option value="60">1 hour</option>
+                                        <option value="120" selected>2 hours</option>
+                                        <option value="240">4 hours</option>
+                                    </select>
+                                </div>
+                                <div class="timing-item">
+                                    <label>Auto-Maintenance Scheduling:</label>
+                                    <select class="timing-select">
+                                        <option value="24" selected>Next day</option>
+                                        <option value="72">3 days</option>
+                                        <option value="168">1 week</option>
+                                        <option value="336">2 weeks</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="config-actions">
+                        <button class="config-btn primary">Save Configuration</button>
+                        <button class="config-btn secondary">Test Alerts</button>
+                        <button class="config-btn secondary">Reset to Default</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Analytics Dashboard -->
+    <section id="performance-analytics" class="performance-analytics">
+        <div class="container">
+            <div class="performance-analytics-section">
+                <div class="section-title">
+                    <span>
+                        <i class="fas fa-chart-line"></i>
+                        Performance Analytics Dashboard
+                    </span>
+                    <div class="analytics-controls">
+                        <select id="analyticsTimeframe" class="analytics-select">
+                            <option value="24h">Last 24 Hours</option>
+                            <option value="7d" selected>Last 7 Days</option>
+                            <option value="30d">Last 30 Days</option>
+                            <option value="90d">Last 90 Days</option>
+                        </select>
+                        <button id="exportAnalytics" class="analytics-btn export">
+                            <i class="fas fa-download"></i>
+                            Export Report
+                        </button>
+                        <button id="compareMode" class="analytics-btn compare">
+                            <i class="fas fa-exchange-alt"></i>
+                            Compare Fences
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Key Performance Indicators -->
+                <div class="kpi-dashboard">
+                    <div class="kpi-card efficiency">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h4>Grid Efficiency</h4>
+                        </div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">
+                                <span class="primary-metric">94.7%</span>
+                                <span class="trend-indicator positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +2.3%
+                                </span>
+                            </div>
+                            <div class="kpi-target">Target: 95.0%</div>
+                            <div class="kpi-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 94.7%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card reliability">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h4>System Reliability</h4>
+                        </div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">
+                                <span class="primary-metric">99.8%</span>
+                                <span class="trend-indicator positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +0.1%
+                                </span>
+                            </div>
+                            <div class="kpi-target">Target: 99.5%</div>
+                            <div class="kpi-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 99.8%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card optimization">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4>Optimization</h4>
+                        </div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">
+                                <span class="primary-metric">92.4%</span>
+                                <span class="trend-indicator positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +15%
+                                </span>
+                            </div>
+                            <div class="kpi-target">Efficiency Score</div>
+                            <div class="kpi-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 78%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="kpi-card maintenance">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h4>Maintenance Score</h4>
+                        </div>
+                        <div class="kpi-content">
+                            <div class="kpi-value">
+                                <span class="primary-metric">8.7/10</span>
+                                <span class="trend-indicator positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +0.3
+                                </span>
+                            </div>
+                            <div class="kpi-target">Excellent Rating</div>
+                            <div class="kpi-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 87%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Charts Grid -->
+                <div class="performance-charts-grid">
+                    <!-- Power Quality Trends -->
+                    <div class="chart-container power-quality">
+                        <div class="chart-header">
+                            <h4>
+                                <i class="fas fa-wave-square"></i>
+                                Power Quality Trends
+                            </h4>
+                            <div class="chart-controls">
+                                <button class="chart-btn active" data-metric="voltage">Voltage</button>
+                                <button class="chart-btn" data-metric="frequency">Frequency</button>
+                                <button class="chart-btn" data-metric="thd">THD</button>
+                            </div>
+                        </div>
+                        <div class="chart-content">
+                            <canvas id="powerQualityChart" width="400" height="200"></canvas>
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color voltage"></span>
+                                    <span>Voltage (V)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color current"></span>
+                                    <span>Current (A)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color power"></span>
+                                    <span>Power (kW)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Efficiency Analysis -->
+                    <div class="chart-container efficiency-analysis">
+                        <div class="chart-header">
+                            <h4>
+                                <i class="fas fa-chart-area"></i>
+                                Efficiency Analysis
+                            </h4>
+                            <div class="efficiency-stats">
+                                <div class="stat-item">
+                                    <span class="stat-value">94.7%</span>
+                                    <span class="stat-label">Current</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value">92.1%</span>
+                                    <span class="stat-label">Previous</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-content">
+                            <canvas id="efficiencyChart" width="400" height="200"></canvas>
+                            <div class="efficiency-breakdown">
+                                <div class="breakdown-item">
+                                    <div class="breakdown-label">Peak Hours</div>
+                                    <div class="breakdown-bar">
+                                        <div class="breakdown-fill" style="width: 96%"></div>
+                                    </div>
+                                    <div class="breakdown-value">96.2%</div>
+                                </div>
+                                <div class="breakdown-item">
+                                    <div class="breakdown-label">Off-Peak</div>
+                                    <div class="breakdown-bar">
+                                        <div class="breakdown-fill" style="width: 93%"></div>
+                                    </div>
+                                    <div class="breakdown-value">93.1%</div>
+                                </div>
+                                <div class="breakdown-item">
+                                    <div class="breakdown-label">Night Hours</div>
+                                    <div class="breakdown-bar">
+                                        <div class="breakdown-fill" style="width: 95%"></div>
+                                    </div>
+                                    <div class="breakdown-value">95.4%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Load Distribution -->
+                    <div class="chart-container load-distribution">
+                        <div class="chart-header">
+                            <h4>
+                                <i class="fas fa-chart-pie"></i>
+                                Load Distribution
+                            </h4>
+                            <div class="load-summary">
+                                <div class="load-total">
+                                    <span class="total-value">847.3</span>
+                                    <span class="total-unit">MW</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-content">
+                            <canvas id="loadDistributionChart" width="300" height="300"></canvas>
+                            <div class="load-breakdown">
+                                <div class="load-item">
+                                    <div class="load-color residential"></div>
+                                    <div class="load-info">
+                                        <span class="load-category">Residential</span>
+                                        <span class="load-percentage">45.2%</span>
+                                    </div>
+                                </div>
+                                <div class="load-item">
+                                    <div class="load-color industrial"></div>
+                                    <div class="load-info">
+                                        <span class="load-category">Industrial</span>
+                                        <span class="load-percentage">32.1%</span>
+                                    </div>
+                                </div>
+                                <div class="load-item">
+                                    <div class="load-color commercial"></div>
+                                    <div class="load-info">
+                                        <span class="load-category">Commercial</span>
+                                        <span class="load-percentage">22.7%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fault Analysis -->
+                    <div class="chart-container fault-analysis">
+                        <div class="chart-header">
+                            <h4>
+                                <i class="fas fa-exclamation-triangle"></i>
+                                Fault Analysis
+                            </h4>
+                            <div class="fault-stats">
+                                <div class="fault-count">
+                                    <span class="count-value">23</span>
+                                    <span class="count-label">This Month</span>
+                                </div>
+                                <div class="fault-trend">
+                                    <span class="trend-value negative">-18%</span>
+                                    <span class="trend-label">vs Last Month</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-content">
+                            <canvas id="faultAnalysisChart" width="400" height="200"></canvas>
+                            <div class="fault-categories">
+                                <div class="fault-category">
+                                    <div class="category-header">
+                                        <span class="category-name">Equipment Failure</span>
+                                        <span class="category-count">12</span>
+                                    </div>
+                                    <div class="category-bar">
+                                        <div class="category-fill equipment" style="width: 52%"></div>
+                                    </div>
+                                </div>
+                                <div class="fault-category">
+                                    <div class="category-header">
+                                        <span class="category-name">Weather Related</span>
+                                        <span class="category-count">7</span>
+                                    </div>
+                                    <div class="category-bar">
+                                        <div class="category-fill weather" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                                <div class="fault-category">
+                                    <div class="category-header">
+                                        <span class="category-name">Human Error</span>
+                                        <span class="category-count">4</span>
+                                    </div>
+                                    <div class="category-bar">
+                                        <div class="category-fill human" style="width: 18%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparative Analysis -->
+                <div class="comparative-analysis" id="comparativeAnalysis" style="display: none;">
+                    <h4>
+                        <i class="fas fa-balance-scale"></i>
+                        Fence Performance Comparison
+                    </h4>
+                    <div class="comparison-grid">
+                        <div class="comparison-chart">
+                            <canvas id="comparisonChart" width="600" height="300"></canvas>
+                        </div>
+                        <div class="comparison-metrics">
+                            <div class="metric-comparison">
+                                <h5>Efficiency Ranking</h5>
+                                <div class="ranking-list">
+                                    <div class="ranking-item">
+                                        <div class="rank">1</div>
+                                        <div class="fence-name">Ernakulam High Voltage</div>
+                                        <div class="metric-value">96.2%</div>
+                                    </div>
+                                    <div class="ranking-item">
+                                        <div class="rank">2</div>
+                                        <div class="fence-name">Kochi Industrial Zone</div>
+                                        <div class="metric-value">94.8%</div>
+                                    </div>
+                                    <div class="ranking-item">
+                                        <div class="rank">3</div>
+                                        <div class="fence-name">Trivandrum Central</div>
+                                        <div class="metric-value">93.1%</div>
+                                    </div>
+                                    <div class="ranking-item">
+                                        <div class="rank">4</div>
+                                        <div class="fence-name">Kozhikode Distribution</div>
+                                        <div class="metric-value">91.7%</div>
+                                    </div>
+                                    <div class="ranking-item">
+                                        <div class="rank">5</div>
+                                        <div class="fence-name">Thrissur Grid</div>
+                                        <div class="metric-value">90.3%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="performance-insights">
+                                <h5>Key Insights</h5>
+                                <div class="insight-list">
+                                    <div class="insight-item">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <span>Ernakulam shows 23% better efficiency during peak hours</span>
+                                    </div>
+                                    <div class="insight-item">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>Kochi has most efficient maintenance operations per MW generated</span>
+                                    </div>
+                                    <div class="insight-item">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <span>Thrissur requires immediate attention for voltage regulation</span>
+                                    </div>
+                                    <div class="insight-item">
+                                        <i class="fas fa-leaf"></i>
+                                        <span>Overall grid carbon footprint reduced by 12% this quarter</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Options Modal -->
+                <div class="export-modal" id="exportModal" style="display: none;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4>Export Performance Report</h4>
+                            <button class="close-btn" onclick="closeExportModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="export-options">
+                                <div class="export-section">
+                                    <h5>Report Type</h5>
+                                    <div class="option-group">
+                                        <label class="option-label">
+                                            <input type="radio" name="reportType" value="summary" checked>
+                                            <span class="checkmark"></span>
+                                            Executive Summary
+                                        </label>
+                                        <label class="option-label">
+                                            <input type="radio" name="reportType" value="detailed">
+                                            <span class="checkmark"></span>
+                                            Detailed Analysis
+                                        </label>
+                                        <label class="option-label">
+                                            <input type="radio" name="reportType" value="technical">
+                                            <span class="checkmark"></span>
+                                            Technical Report
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="export-section">
+                                    <h5>Time Period</h5>
+                                    <div class="option-group">
+                                        <label class="option-label">
+                                            <input type="radio" name="timePeriod" value="current" checked>
+                                            <span class="checkmark"></span>
+                                            Current Selection (7 Days)
+                                        </label>
+                                        <label class="option-label">
+                                            <input type="radio" name="timePeriod" value="custom">
+                                            <span class="checkmark"></span>
+                                            Custom Range
+                                        </label>
+                                    </div>
+                                    <div class="date-range" id="customDateRange" style="display: none;">
+                                        <input type="date" id="startDate" class="date-input">
+                                        <span>to</span>
+                                        <input type="date" id="endDate" class="date-input">
+                                    </div>
+                                </div>
+                                <div class="export-section">
+                                    <h5>Format</h5>
+                                    <div class="option-group">
+                                        <label class="option-label">
+                                            <input type="radio" name="format" value="pdf" checked>
+                                            <span class="checkmark"></span>
+                                            PDF Report
+                                        </label>
+                                        <label class="option-label">
+                                            <input type="radio" name="format" value="excel">
+                                            <span class="checkmark"></span>
+                                            Excel Spreadsheet
+                                        </label>
+                                        <label class="option-label">
+                                            <input type="radio" name="format" value="csv">
+                                            <span class="checkmark"></span>
+                                            CSV Data
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="modal-btn secondary" onclick="closeExportModal()">Cancel</button>
+                            <button class="modal-btn primary" onclick="generateReport()">
+                                <i class="fas fa-download"></i>
+                                Generate Report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardware Section -->
+    <section id="hardware" class="hardware">
+        <div class="container">
+            <h2>Hardware Architecture</h2>
+            
+            <!-- Main Architecture Diagram -->
+            <div class="architecture-layout">
+                <div class="architecture-diagram">
+                    <div class="central-controller">
+                        <div class="component main-chip" data-component="microcontroller">
+                            <i class="fas fa-microchip"></i>
+                            <span>ESP32</span>
+                            <small>Main Controller</small>
+                        </div>
+                    </div>
+                    
+                    <div class="peripheral-components">
+                        <div class="component sensor-group" data-component="sensors">
+                            <i class="fas fa-thermometer-half"></i>
+                            <span>Sensors</span>
+                            <small>ACS712, ZMPT101B, PIR, SW-420</small>
+                        </div>
+                        
+                        <div class="component comm-group" data-component="communication">
+                            <i class="fas fa-satellite-dish"></i>
+                            <span>Communication</span>
+                            <small>SIM800L GSM Module</small>
+                        </div>
+                        
+                        <div class="component power-group" data-component="power">
+                            <i class="fas fa-battery-full"></i>
+                            <span>Power System</span>
+                            <small>Battery Backup</small>
+                        </div>
+                        
+                        <div class="component display-group" data-component="display">
+                            <i class="fas fa-tv"></i>
+                            <span>Display & I/O</span>
+                            <small>OLED, LEDs, Buzzer</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Detailed Specifications Panel -->
+                <div class="specifications-panel">
+                    <div class="spec-card active" id="microcontroller">
+                        <h3><i class="fas fa-microchip"></i> ESP32 Microcontroller</h3>
+                        <div class="spec-details">
+                            <div class="spec-feature">
+                                <i class="fas fa-cog"></i>
+                                <span>Dual-core 240MHz processor</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-wifi"></i>
+                                <span>Built-in WiFi & Bluetooth</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-microchip"></i>
+                                <span>Multiple ADC channels</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-battery-quarter"></i>
+                                <span>Low power modes</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>OTA update capability</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-card" id="sensors">
+                        <h3><i class="fas fa-thermometer-half"></i> Sensor Array</h3>
+                        <div class="spec-details">
+                            <div class="spec-feature">
+                                <i class="fas fa-bolt"></i>
+                                <span>ACS712 Current Sensor (±30A)</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-plug"></i>
+                                <span>ZMPT101B Voltage Sensor (0-250V)</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-hand-paper"></i>
+                                <span>PIR Motion Sensor (HC-SR501)</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-wave-square"></i>
+                                <span>SW-420 Vibration Sensor</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-thermometer-half"></i>
+                                <span>Temperature monitoring</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-card" id="communication">
+                        <h3><i class="fas fa-satellite-dish"></i> Communication Module</h3>
+                        <div class="spec-details">
+                            <div class="spec-feature">
+                                <i class="fas fa-signal"></i>
+                                <span>SIM800L GSM/4G Module</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-wifi"></i>
+                                <span>WiFi 802.11 b/g/n</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-broadcast-tower"></i>
+                                <span>LoRa long-range (10km)</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-sms"></i>
+                                <span>Emergency SMS alerts</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Encrypted data transmission</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-card" id="power">
+                        <h3><i class="fas fa-battery-full"></i> Power Management</h3>
+                        <div class="spec-details">
+                            <div class="spec-feature">
+                                <i class="fas fa-plug"></i>
+                                <span>AC power supply (12V DC)</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-battery-full"></i>
+                                <span>Lithium battery backup (7Ah)</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-microchip"></i>
+                                <span>Power optimization circuits</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Low voltage disconnect protection</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Weather-resistant enclosure (IP65)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="spec-card" id="display">
+                        <h3><i class="fas fa-tv"></i> Display & I/O</h3>
+                        <div class="spec-details">
+                            <div class="spec-feature">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Status LEDs (Red, Green, Yellow)</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-volume-up"></i>
+                                <span>Active Buzzer for alerts</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-eye"></i>
+                                <span>Real-time status monitoring</span>
+                            </div>
+                            <div class="spec-feature">
+                                <i class="fas fa-bell"></i>
+                                <span>Visual & audio notifications</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Specifications -->
+            <div class="tech-specs-section">
+                <h3>Technical Specifications</h3>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <i class="fas fa-bolt"></i>
+                        <span class="spec-label">Operating Voltage</span>
+                        <span class="spec-value">12V DC</span>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-wifi"></i>
+                        <span class="spec-label">Communication</span>
+                        <span class="spec-value">GSM/WiFi/LoRa</span>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <span class="spec-label">Range</span>
+                        <span class="spec-value">Up to 10km (LoRa)</span>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-battery-full"></i>
+                        <span class="spec-label">Battery Life</span>
+                        <span class="spec-value">30 days backup</span>
+                    </div>
+                    <div class="spec-item">
+                        <i class="fas fa-thermometer-half"></i>
+                        <span class="spec-label">Operating Temperature</span>
+                        <span class="spec-value">-20°C to +60°C</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sensors Section -->
+    <section class="sensors-section">
+        <div class="container">
+            <h2>Sensor Technologies</h2>
+            <p class="section-subtitle">Complete array of sensors for comprehensive monitoring and detection</p>
+            
+            <div class="sensors-grid compact">
+                <div class="sensor-card microcontroller">
+                    <div class="sensor-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>Microcontroller</h3>
+                    <p class="sensor-model">ESP32 Development Board</p>
+                    <div class="sensor-specs">
+                        <span class="spec">Dual-core processor</span>
+                        <span class="spec">WiFi + Bluetooth</span>
+                    </div>
+                </div>
+
+                <div class="sensor-card electrical">
+                    <div class="sensor-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Current Sensor</h3>
+                    <p class="sensor-model">ACS712 Current Sensor</p>
+                    <div class="sensor-specs">
+                        <span class="spec">Range: ±20A/30A</span>
+                        <span class="spec">Hall Effect Based</span>
+                    </div>
+                </div>
+
+                <div class="sensor-card electrical">
+                    <div class="sensor-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>Voltage Sensor</h3>
+                    <p class="sensor-model">ZMPT101B AC Voltage Sensor</p>
+                    <div class="sensor-specs">
+                        <span class="spec">Range: 0-250V AC</span>
+                        <span class="spec">Isolated measurement</span>
+                    </div>
+                </div>
+
+                <div class="sensor-card motion">
+                    <div class="sensor-icon">
+                        <i class="fas fa-hand-paper"></i>
+                    </div>
+                    <h3>Motion Sensor</h3>
+                    <p class="sensor-model">PIR Motion Sensor (HC-SR501)</p>
+                    <div class="sensor-specs">
+                        <span class="spec">Range: 3-7 meters</span>
+                        <span class="spec">Adjustable sensitivity</span>
+                    </div>
+                </div>
+
+                <div class="sensor-card motion">
+                    <div class="sensor-icon">
+                        <i class="fas fa-wave-square"></i>
+                    </div>
+                    <h3>Vibration Sensor</h3>
+                    <p class="sensor-model">SW-420 Vibration Sensor</p>
+                    <div class="sensor-specs">
+                        <span class="spec">Digital output</span>
+                        <span class="spec">High sensitivity</span>
+                    </div>
+                </div>
+
+                <div class="sensor-card communication">
+                    <div class="sensor-icon">
+                        <i class="fas fa-satellite-dish"></i>
+                    </div>
+                    <h3>GSM Module</h3>
+                    <p class="sensor-model">SIM800L GSM Module</p>
+                    <div class="sensor-specs">
+                        <span class="spec">Quad-band</span>
+                        <span class="spec">SMS/Call capability</span>
+                    </div>
+                </div>
+
+                <div class="sensor-card indicator">
+                    <div class="sensor-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>LED Indicators</h3>
+                    <p class="sensor-model">LEDs (Red, Green, Yellow)</p>
+                    <div class="sensor-specs">
+                        <span class="spec">Status indication</span>
+                        <span class="spec">Visual alerts</span>
+                    </div>
+                </div>
+
+                <div class="sensor-card audio">
+                    <div class="sensor-icon">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3>Audio Alert</h3>
+                    <p class="sensor-model">Active Buzzer</p>
+                    <div class="sensor-specs">
+                        <span class="spec">Audible alerts</span>
+                        <span class="spec">High volume output</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strengths & Solutions Section -->
+    <section class="strengths-solutions">
+        <div class="container">
+            <div class="competitive-advantage">
+                <h3>Why Our Solution Stands Out</h3>
+                <div class="advantage-grid">
+                    <div class="advantage-item">
+                        <i class="fas fa-network-wired"></i>
+                        <h4>Comprehensive Grid Coverage</h4>
+                        <p>Complete power line monitoring from substations to distribution points, covering entire electrical infrastructure</p>
+                    </div>
+                    <div class="advantage-item">
+                        <i class="fas fa-power-off"></i>
+                        <h4>Automatic Prevention</h4>
+                        <p>Smart circuit breakers instantly disconnect illegal connections preventing theft and ensuring grid safety</p>
+                    </div>
+                    <div class="advantage-item">
+                        <i class="fas fa-brain"></i>
+                        <h4>AI-Powered Intelligence</h4>
+                        <p>Advanced machine learning detects illegal electrification patterns and predicts potential violations</p>
+                    </div>
+                    <div class="advantage-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Grid Protection</h4>
+                        <p>Real-time monitoring prevents overloads, maintains power quality, and protects electrical infrastructure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Project Team & Contact</h2>
+            
+            <!-- Team Members Section -->
+            <div class="team-section">
+                <h3>Team Members</h3>
+                <div class="team-grid">
+                    <div class="team-member leader">
+                        <div class="member-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h4>Harshvardhan Sharma</h4>
+                        <p class="role">Team Leader</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4>Ramneek Kaur</h4>
+                        <p class="role">AI/ML Engineer & IoT Specialist</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>Ashok Chaturvedi</h4>
+                        <p class="role">AI/ML Engineer</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h4>Anurag</h4>
+                        <p class="role">Full Stack Developer</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h4>Jnaneswar Kandukuri</h4>
+                        <p class="role">Full Stack Developer & Hardware Integration Engineer</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <h4>Sanya</h4>
+                        <p class="role">Designer</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-info">
+                <div class="contact-card">
+                    <h3>Get In Touch</h3>
+                    <p>For technical queries and collaboration opportunities</p>
+                    <p><strong>Email us at:</strong> <a href="mailto:weareintellifence@gmail.com">weareintellifence@gmail.com</a></p>
+                    <button class="btn btn-primary" onclick="window.location.href='mailto:weareintellifence@gmail.com'">
+                        <i class="fas fa-envelope"></i> Contact Team
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>IntelliFence</h3>
+                    <p>Smart Power Line Monitoring & Illegal Electrification Prevention System for Kerala State Electricity Board Limited</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#hardware">Hardware</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#performance-analytics">Analytics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Technology</h4>
+                    <ul>
+                        <li>ESP32 Microcontroller</li>
+                        <li>IoT Sensors</li>
+                        <li>Cloud Analytics</li>
+                        <li>Real-time Monitoring</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>Email us for any inquiries:</p>
+                    <p><a href="mailto:weareintellifence@gmail.com">weareintellifence@gmail.com</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 IntelliFence - Smart India Hackathon. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

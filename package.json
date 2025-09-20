@@ -1,0 +1,41 @@
+{
+  "name": "intellifence-sih2024",
+  "version": "1.0.0",
+  "description": "IntelliFence - Smart Power Line Monitoring System for Kerala State Electricity Board",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "dev": "python -m http.server 8080",
+    "build": "echo 'No build process needed - static site ready for deployment'",
+    "test": "echo 'Running tests...' && node test.js",
+    "deploy": "netlify deploy --prod"
+  },
+  "keywords": [
+    "iot",
+    "power-monitoring",
+    "smart-grid",
+    "kerala-seb",
+    "sih2024",
+    "esp32",
+    "real-time-monitoring"
+  ],
+  "author": "IntelliFence Team - SIH 2024",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/intellifence-sih2024.git"
+  },
+  "homepage": "https://intellifence-sih2024.netlify.app",
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
